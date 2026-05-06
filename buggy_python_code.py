@@ -1,7 +1,6 @@
-import sys 
-import os
 import yaml
 import flask
+import urllib3
 
 app = flask.Flask(__name__)
 
@@ -12,9 +11,8 @@ def index():
     url = flask.request.args.get("url")
     return fetch_website(version, url)
 
-        
 CONFIG = {"API_KEY": "771df488714111d39138eb60df756e6b"}
-class Person(object):
+class Person:
     def __init__(self, name):
         self.name = name
 
@@ -31,8 +29,8 @@ def fetch_website(urllib_version, url):
     try: 
         http = urllib.PoolManager()
         r = http.request('GET', url)
-    except:
-        print('Exception')
+    except Exception as exc:
+        print(f"Exception: {exc}")
 
 
 def load_yaml(filename):
@@ -42,7 +40,8 @@ def load_yaml(filename):
     
 def authenticate(password):
     # Assert that the password is correct
-    assert password == "Iloveyou", "Invalid password!"
+    if password != "Iloveyou":
+    raise ValueError("Invalid password!")
     print("Successfully authenticated!")
 
 if __name__ == '__main__':
@@ -53,9 +52,9 @@ if __name__ == '__main__':
     print("4. Use of assert statements vulnerability:")
     choice  = input("Select vulnerability: ")
     if choice == "1": 
-        new_person = Person("Vickie")  
+        new_person = Person("Vickie") 
         print_nametag(input("Please format your nametag: "), new_person)
-    elif choice == "2":
+        elif choice == "2":
         urlib_version = input("Choose version of urllib: ")
         fetch_website(urlib_version, url="https://www.google.com")
     elif choice == "3":
